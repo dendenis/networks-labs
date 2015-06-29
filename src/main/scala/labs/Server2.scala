@@ -8,14 +8,6 @@ import java.util.Random
  * Created by dkirsanov on 24.06.15.
  */
 
-/**
- * Simple client/server application using Java sockets. 
- *
- * The server simply generates random integer values and 
- * the clients provide a filter function to the server 
- * to get only values they interested in (eg. even or 
- * odd values, and so on). 
- */
 object Client2 {
 
   def main(args: Array[String]) {

@@ -71,7 +71,7 @@ object Huffman {
           val list = curr._2.clone()
           hash(curr._1.get.value.element.get) = list.toList
         }
-        else {x
+        else {
           if (curr._1.get.left.isDefined) {
             val cloneList = curr._2.clone()
             cloneList += false
