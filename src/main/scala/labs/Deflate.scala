@@ -2,6 +2,7 @@ package labs
 
 import labs.Huffman._
 
+
 import scala.collection.mutable.HashMap
 import scala.collection.immutable.TreeMap
 import scala.collection.mutable.ListBuffer

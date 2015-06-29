@@ -1,10 +1,8 @@
-package org.bispo.zip
+package labs
 
 import scala.language.postfixOps
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.Queue
-import org.bispo.zip._
 
 object LZ77 {
   def generateDistanceLengthTable(bytes: Array[Byte]) : List[Pair[Byte, Pair[Int, Int]]] = {

@@ -1,4 +1,4 @@
-package org.bispo.zip
+package labs
 
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Queue

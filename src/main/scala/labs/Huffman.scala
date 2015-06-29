@@ -1,10 +1,11 @@
 package labs
 
+import scala.collection.mutable
 import scala.language.postfixOps
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Queue
-import org.bispo.zip._
+
 
 class HuffmanFrequency[T <% Ordered[T]](var frequency: Int, var element: Option[T] = None) extends Ordered[HuffmanFrequency[T]] {
   def compare(that: HuffmanFrequency[T]) = this.frequency - that.frequency
@@ -16,7 +17,7 @@ class HuffmanFrequency[T <% Ordered[T]](var frequency: Int, var element: Option[
 
 object Huffman {
   def countFrequency[T <% Ordered[T]](arr: Array[T]) : List[HuffmanFrequency[T]] = {
-    val hash = HashMap.empty[T, Int] withDefaultValue 0
+    val hash = mutable.HashMap.empty[T, Int] withDefaultValue 0
     arr foreach { hash(_) += 1 }
 
     val list = new ListBuffer[HuffmanFrequency[T]]
@@ -45,7 +46,7 @@ object Huffman {
 
           treeList = treeList.sortWith((x, y) => {
             if (x.get.value.frequency == y.get.value.frequency)
-              y.get.value.element == None
+              y.get.value.element.isEmpty
             else
               x.get.value.frequency < y.get.value.frequency
           })
@@ -60,24 +61,24 @@ object Huffman {
 
   def huffmanTable[T <% Ordered[T]](arr: Array[T]) : Map[T, List[Boolean]] = {
     val tree = generateTree(countFrequency(arr))
-    val hash = HashMap.empty[T, List[Boolean]]
+    val hash = mutable.HashMap.empty[T, List[Boolean]]
     def levelOrder(root: Option[Node[HuffmanFrequency[T]]]) : Unit = {
-      val queue = new Queue[Pair[Option[Node[HuffmanFrequency[T]]], ListBuffer[Boolean]]]
+      val queue = new mutable.Queue[Pair[Option[Node[HuffmanFrequency[T]]], ListBuffer[Boolean]]]
       queue.enqueue((root, new ListBuffer[Boolean]))
-      while (!queue.isEmpty) {
+      while (queue.nonEmpty) {
         val curr = queue.dequeue()
-        if (curr._1.get.left == None && curr._1.get.right == None) {
-          val list = curr._2.clone
+        if (curr._1.get.left.isEmpty && curr._1.get.right.isEmpty) {
+          val list = curr._2.clone()
           hash(curr._1.get.value.element.get) = list.toList
         }
-        else {
-          if (curr._1.get.left != None) {
-            val cloneList = curr._2.clone
+        else {x
+          if (curr._1.get.left.isDefined) {
+            val cloneList = curr._2.clone()
             cloneList += false
             queue.enqueue((curr._1.get.left, cloneList))
           }
-          if (curr._1.get.right != None) {
-            val cloneList = curr._2.clone
+          if (curr._1.get.right.isDefined) {
+            val cloneList = curr._2.clone()
             cloneList += true
             queue.enqueue((curr._1.get.right, cloneList))
           }
